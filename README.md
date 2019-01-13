@@ -35,4 +35,8 @@ Foreign-exchange app requires JRE 1.8 to be installed on the machine and interne
 - UI redesign.
 - More tests.
 
+### Known bugs
+
+- Not all currencies can be requested.
+- Minor ui issues.
 
