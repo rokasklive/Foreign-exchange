@@ -45,10 +45,16 @@ public class Utilities {
 			input = in.nextLine();
 			if(validateCurrency(input)) {
 				currencies.add(input.toUpperCase());
-			} 
+			} else {
+				System.out.println("Invalid input.");
+				continue;
+			}
 		} while (!input.isEmpty());
 
 		currencies.removeIf(s -> (s.length()==0)); //A precaution to avoid any Set entries that are empty.
+		if (currencies.isEmpty()) {
+			currencies.add("USD");
+		}
 
 		return currencies;		
 	}
@@ -60,7 +66,7 @@ public class Utilities {
 	 * @return a string that represents a date (yyyy-MM-dd).
 	 */
 	public static String fromDateSelector() {
-		System.out.println("Please enter starting date: (press enter to skip)");
+		System.out.println("\n" + "Please enter starting date: (press enter to skip)");
 		dateFrom = in.nextLine();
 		if(dateFrom.isEmpty() || LocalDate.parse(dateFrom).isAfter(LocalDate.now())) {
 			System.out.println("Using current date.");
