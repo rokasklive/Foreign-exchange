@@ -94,5 +94,8 @@ public class Utilities {
 		} while(!input.isEmpty());
 	}
 
+	public static void terminateApp() {
+		System.exit(0);
+	}
 	
 }

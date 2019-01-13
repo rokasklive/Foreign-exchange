@@ -21,6 +21,9 @@ public class ClientApplication {
 		service.requestRatesInDateRange(Utilities.fromDateSelector(), 
 										Utilities.toDateSelector(), 
 										Utilities.currencySelector(new TreeSet<String>()));
+		
+		Utilities.terminateApp();
+	
 	}
 }
 

@@ -99,7 +99,7 @@ public class ForeignExchangeServiceImpl implements ForeignExchangeService {
 		for(String key: Currency.getResultMap().keySet()) {
 			System.out.printf("\n%-12s %-14s %-12s\n\n", "Currency", "Date", "Rate");
 			for(Currency c: Currency.getResultMap().get(key)) {
-				System.out.printf("%-12s %-14s %-12s\n", key.toUpperCase(), c.getDate(), c.getRate());
+				System.out.printf("%-12s %-14s %-12s\n", key.toUpperCase(), c.getDate(), c.getRate()+"\n");
 			}
 		}
 	}
