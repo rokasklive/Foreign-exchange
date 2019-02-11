@@ -1,5 +1,6 @@
 package lt.foreignexchange.client.configuration;
 
+import javax.xml.XMLConstants;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -13,9 +14,10 @@ public class XmlParserConfig {
 	@Bean
 	public DocumentBuilder getDocument() throws ParserConfigurationException {
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+		factory.setExpandEntityReferences(false);
+		factory.setFeature(XMLConstants.FEATURE_SECURE_PROCESSING, true);
 		factory.setIgnoringComments(true);
 		factory.setIgnoringElementContentWhitespace(true);
-		DocumentBuilder builder = factory.newDocumentBuilder();
-		return builder;
+		return factory.newDocumentBuilder();
 	}	
 }

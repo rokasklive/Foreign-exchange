@@ -36,11 +36,10 @@ public class XmlParser {
 	 * 
 	 * @param response XML string.
 	 * @return List<Currency> of currency objects.
-	 * @throws BeansException
 	 * @throws SAXException
 	 * @throws IOException
 	 */
-	public static List<Currency> xmlToObject(String response) throws BeansException, SAXException, IOException{
+	public static List<Currency> xmlToObject(String response) throws SAXException, IOException{
 		List<Currency> currencyResultList = new ArrayList<>(); //A list for currency objects to be parsed from XML.
 		InputStream stream = new ByteArrayInputStream(response.getBytes(StandardCharsets.UTF_8)); //Converts a string to InputStream
 		Document doc = context.getBean(DocumentBuilder.class).parse(stream); //Parses InputStream to create a Document object

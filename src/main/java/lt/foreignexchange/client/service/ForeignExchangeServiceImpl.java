@@ -1,18 +1,17 @@
 package lt.foreignexchange.client.service;
 
-import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.apache.http.client.utils.URIBuilder;
-import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
-import org.xml.sax.SAXException;
 
 import lt.foreignexchange.client.configuration.RequestBuilderConfig;
 import lt.foreignexchange.client.helpers.XmlParser;
@@ -47,13 +46,11 @@ public class ForeignExchangeServiceImpl implements ForeignExchangeService {
 				//Uses each currency code from user input for sending HTTP GET requests and then sends the results to parser.
 				//Puts parsed result to map.
 				Currency.getResultMap().put(c, XmlParser.xmlToObject(executeRequest(requestBuilder.toString())));				
-			} catch (BeansException e) {
-				e.printStackTrace();
-			} catch (SAXException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (Exception e){
+				Logger logger = Logger.getLogger("log");
+				logger.log(Level.FINER, e.getMessage());
 			}
+
 			requestBuilder.clearParameters();
 		}
 			compileResults(dateFrom, dateTo);
@@ -73,20 +70,24 @@ public class ForeignExchangeServiceImpl implements ForeignExchangeService {
 			for(String key: Currency.getResultMap().keySet()) {
 				double earliestRate = 0;
 				double latestRate = 0;
-				BigDecimal change = BigDecimal.ZERO;
+				BigDecimal change;
 				
 				for(Currency c: Currency.getResultMap().get(key)) {
 					//Determines the earliest currency rate entry in results map.
 					if(c.getDate().isEqual(LocalDate.parse(dateFrom))) {
 						earliestRate = c.getRate().doubleValue();
-					}
+					} else
 					//Determines the latest currency rate entry in results map.
 					if(c.getDate().isEqual(LocalDate.parse(dateTo))) {
 						latestRate = c.getRate().doubleValue();
 					}
 				}
+
+				if(latestRate==0){
+					latestRate=1;
+				}
 				//Calculates the percentage of change between the rate at the start and the end of selected period.
-				change = new BigDecimal(((earliestRate - latestRate)/latestRate)*100).setScale(3, RoundingMode.HALF_EVEN);
+				change = BigDecimal.valueOf(((earliestRate - latestRate)/latestRate)*100).setScale(3, RoundingMode.HALF_EVEN);
 				System.out.println(key.toUpperCase() + "  " + change + "%");
 			}
 		}

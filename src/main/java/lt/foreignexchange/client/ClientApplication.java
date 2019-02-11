@@ -13,14 +13,14 @@ import lt.foreignexchange.client.service.ForeignExchangeServiceImpl;
 public class ClientApplication {
 
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		SpringApplication.run(ClientApplication.class, args);
 		
 		ForeignExchangeServiceImpl service = new ForeignExchangeServiceImpl();
 		
 		service.requestRatesInDateRange(Utilities.fromDateSelector(), 
 										Utilities.toDateSelector(), 
-										Utilities.currencySelector(new TreeSet<String>()));
+										Utilities.currencySelector(new TreeSet<>()));
 		
 		Utilities.terminateApp();
 	

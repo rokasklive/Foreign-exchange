@@ -16,6 +16,8 @@ public class Utilities {
 	private static Scanner in = new Scanner(System.in);
 	private static String input;
 	private static String dateFrom;
+
+	private Utilities(){}
 	
 	/**
 	 * Makes a HTTP GET request to specified URL that returns an XML list of tracked currencies in Bank of Lithuania.
@@ -70,7 +72,7 @@ public class Utilities {
 		dateFrom = in.nextLine();
 		if(dateFrom.isEmpty() || LocalDate.parse(dateFrom).isAfter(LocalDate.now())) {
 			System.out.println("Using current date.");
-			dateFrom = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now()).toString();		
+			dateFrom = DateTimeFormatter.ISO_LOCAL_DATE.format(LocalDate.now());
 		} 
 		return dateFrom;
 	}

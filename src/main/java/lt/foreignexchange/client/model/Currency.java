@@ -22,7 +22,10 @@ public class Currency {
 	private LocalDate date;
 	private BigDecimal rate;
 	private static Map<String, List<Currency>> resultMap = new TreeMap<>();
-	
+
+	/**
+	 * This and that
+	 */
 	public Currency() {	}
 	
 	public String getCurrencyCode() {
